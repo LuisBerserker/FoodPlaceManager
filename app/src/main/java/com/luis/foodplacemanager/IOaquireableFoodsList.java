@@ -32,8 +32,10 @@ public class IOaquireableFoodsList {
                 }
                 reader.close();
                 listReReadRequired = false;
+                return words.toArray(new String[0]);
             }
             catch (IOException ex) {
+                return new String[]{"This","shouldn't","be","here", "Exception:", ex.toString()};
             }
 
         }
