@@ -19,9 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ChoseNewItem"
-            android:parentActivityName=".MainStorageDisplay">
-        </activity>
+        <activity
+            android:name=".ChoseNewItem"
+            android:parentActivityName=".MainStorageDisplay"></activity>
+        <activity android:name=".CreateNewItem" android:parentActivityName=".ChoseNewItem"></activity>
+
     </application>
 
 </manifest>
