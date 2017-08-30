@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">FoodPlaceManager</string>
     <string name="action_settings">Settings</string>
+    <string name="createButtonText">Create</string>
+    <string name="helperTextDescription">Description</string>
+    <string name="helperTextName">Name</string>
 </resources>

@@ -28,5 +28,10 @@ public class IOaquireableFoodsList {
         return thisDBHandler.getItemList();
 
     }
+    public static void addItem(String name, String description, Context context){
+        DBHandler thisDBHandler = new DBHandler(context, null, null, 1);
+        thisDBHandler.addItem(new BasicItem(name, description));
+        return;
+    }
 
 }
