@@ -25,7 +25,9 @@
         <activity
             android:name=".CreateNewItem"
             android:parentActivityName=".ChoseNewItem" />
-        <activity android:name=".specifyItemAmount"></activity>
+        <activity
+            android:name=".specifyItemAmount"
+            android:parentActivityName=".ChoseNewItem"/>
     </application>
 
 </manifest>

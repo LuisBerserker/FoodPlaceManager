@@ -42,6 +42,13 @@ public class ChoseNewItem extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
     private String[] getNameArray(BasicItem[] aquireableFoods){
         String[] output = new String[aquireableFoods.length];
         for(int i=0; i<output.length;i++){
