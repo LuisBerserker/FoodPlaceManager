@@ -11,7 +11,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class DBHandler extends SQLiteOpenHelper {
@@ -20,10 +23,18 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME ="foodPlaceManagerDB.db";
     private static final String TABLE_ACQUIRABLE = "aquireableFoods";
+    private static final String TABLE_AVAILABLE = "availableFoods";
 
+    //aq
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEMNAME = "itemname";
     public static final String COLUMN_ITEMDESCRIPTION="itemdescription";
+
+    //av
+    public static final String COLUMN_ITEMID = "itemid";
+    public static final String COLUMN_EXPIRATIONDATE= "expireDate";
+    public static final String COLUMN_EXPIREABLE="expireable";
+
     private Context context;
 
     public DBHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -40,6 +51,13 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_ITEMDESCRIPTION +" TEXT"+
                 ")";
         db.execSQL(CREATE_ITEMS_TABLE);
+        String CREATE_STORAGE_TABLE = "CREATE TABLE "+
+                TABLE_AVAILABLE +"("+
+                COLUMN_ID+ " INTEGER PRIMARY KEY,"+
+                COLUMN_ITEMID+" INTEGER,"+
+                COLUMN_EXPIRATIONDATE+ " INTEGER,"+
+                COLUMN_EXPIREABLE+" INTEGER)";
+        db.execSQL(CREATE_STORAGE_TABLE);
     }
 
     @Override
@@ -85,5 +103,17 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return   output.toArray(new BasicItem[0]);
     }
+    public void addStorage(int ItemID, Date expirationDate, boolean expires ){
+        ContentValues values = new ContentValues();
 
+        values.put(COLUMN_ITEMID, ItemID);
+        values.put(COLUMN_EXPIRATIONDATE, expirationDate.getTime());
+        int i =0;
+        if (expires){i++;}
+        values.put(COLUMN_EXPIREABLE,i );
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insert(TABLE_AVAILABLE, null, values);
+        db.close();
+    }
 }
