@@ -21,9 +21,11 @@
         </activity>
         <activity
             android:name=".ChoseNewItem"
-            android:parentActivityName=".MainStorageDisplay"></activity>
-        <activity android:name=".CreateNewItem" android:parentActivityName=".ChoseNewItem"></activity>
-
+            android:parentActivityName=".MainStorageDisplay" />
+        <activity
+            android:name=".CreateNewItem"
+            android:parentActivityName=".ChoseNewItem" />
+        <activity android:name=".specifyItemAmount"></activity>
     </application>
 
 </manifest>

@@ -33,5 +33,13 @@ public class IOaquireableFoodsList {
         thisDBHandler.addItem(new BasicItem(name, description));
         return;
     }
+    public static BasicItem aquireableItemByDBPos(Context context, int i){
+        DBHandler dbHandler=new DBHandler(context, null,null,1);
+        return dbHandler.getItemList()[i];
+    }
+    public static void deleteItem(Context context, String name, String description){
+        DBHandler dbHandler=new DBHandler(context, null,null,1);
+        dbHandler.deleteItem(name, description);
+    }
 
 }

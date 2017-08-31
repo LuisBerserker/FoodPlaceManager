@@ -39,7 +39,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 COLUMN_ITEMNAME+" TEXT,"+
                 COLUMN_ITEMDESCRIPTION +" TEXT"+
                 ")";
-        Log.d("create table: ",CREATE_ITEMS_TABLE );
         db.execSQL(CREATE_ITEMS_TABLE);
     }
 
@@ -54,6 +53,17 @@ public class DBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_ACQUIRABLE, null, values);
+        db.close();
+    }
+    public void deleteItem(String NAME, String DESCRIPTION){
+        String DELETE_ITEM = "DELETE FROM "+
+                TABLE_ACQUIRABLE+ " WHERE "+
+                COLUMN_ITEMNAME + "= '"+
+                 NAME+ "' AND "+
+                COLUMN_ITEMDESCRIPTION+ "= '"+
+                DESCRIPTION+"'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(DELETE_ITEM);
         db.close();
     }
     public BasicItem[] getItemList(){

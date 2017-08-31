@@ -4,4 +4,5 @@
     <string name="createButtonText">Create</string>
     <string name="helperTextDescription">Description</string>
     <string name="helperTextName">Name</string>
+    <string name="delete">Delete</string>
 </resources>
