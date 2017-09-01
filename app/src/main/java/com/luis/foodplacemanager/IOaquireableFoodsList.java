@@ -20,13 +20,9 @@ import java.util.ArrayList;
  */
 
 public class IOaquireableFoodsList {
-     static ArrayList<String> words = new ArrayList<String>();
-     static   boolean listReReadRequired = true;
-
     public static BasicItem[] ListAquireableFoods(Context context){
         DBHandler thisDBHandler = new DBHandler(context, null, null,1);
         return thisDBHandler.getItemList();
-
     }
     public static void addItem(String name, String description, Context context){
         DBHandler thisDBHandler = new DBHandler(context, null, null, 1);
@@ -42,4 +38,8 @@ public class IOaquireableFoodsList {
         dbHandler.deleteItem(name, description);
     }
 
+    public static BasicItem findItemByID(Context context, int ID){
+        DBHandler dbHandler=new DBHandler(context, null,null,1);
+        return dbHandler.findItemByID(ID);
+    }
 }

@@ -11,13 +11,21 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.Date;
 
 public class MainStorageDisplay extends AppCompatActivity {
     public static IOaquireableFoodsList iOaquireableFoodsList;
+    public static IOavailableFoodsList iOavailableFoodsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         iOaquireableFoodsList = new IOaquireableFoodsList();
+        iOavailableFoodsList=new IOavailableFoodsList();
+        StorageItem[] availableFood= IOavailableFoodsList.ListAvailableFoods(this);
         setContentView(R.layout.activity_main_storage_display);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -30,8 +38,24 @@ public class MainStorageDisplay extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        ArrayAdapter adapt = new ArrayAdapter<String>(this, R.layout.activity_listview, getNameArray(availableFood));
+        ListView listView = (ListView)findViewById(R.id.listOfavailableFoods);
+        listView.setAdapter(adapt);
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(MainStorageDisplay.this, ChoseNewItem.class);
+//                startActivity(intent);
+//            }
+//        });
     }
-
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -52,5 +76,13 @@ public class MainStorageDisplay extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private String[] getNameArray(StorageItem[] availableFoods){
+        String[] output = new String[availableFoods.length];
+        for(int i=0; i<output.length;i++){
+            output[i]=IOaquireableFoodsList.findItemByID(getApplicationContext(), availableFoods[i].getItemID()).getItemName()+"   "+ availableFoods[i].getExpirationDate();
+        }
+        return output;
     }
 }

@@ -35,5 +35,5 @@ public class BasicItem {
     public String getItemDescription(){
         return this._itemdescription;
     }
-
+    public void set_itemdescription(String s){this._itemdescription=s;}
 }

@@ -31,6 +31,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String COLUMN_ITEMDESCRIPTION="itemdescription";
 
     //av
+    //public static final String COLUMN_ID = "_id";
     public static final String COLUMN_ITEMID = "itemid";
     public static final String COLUMN_EXPIRATIONDATE= "expireDate";
     public static final String COLUMN_EXPIREABLE="expireable";
@@ -84,6 +85,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(DELETE_ITEM);
         db.close();
     }
+    public BasicItem findItemByID(int ID){
+        String query ="SELECT * FROM "+ TABLE_ACQUIRABLE+
+                " WHERE "+ COLUMN_ID+"= '"+
+                ID+"'";
+        BasicItem output = new BasicItem();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+        }
+        output.setID(cursor.getInt(0));
+        output.setItemName(cursor.getString(1));
+        output.set_itemdescription(cursor.getString(2));
+        return output;
+    }
     public BasicItem[] getItemList(){
         String query = "SELECT * FROM "+ TABLE_ACQUIRABLE;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -115,5 +131,33 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.insert(TABLE_AVAILABLE, null, values);
         db.close();
+    }
+    public void deleteStorage(int ItemID){
+        String DELETE_STORAGE = "DELETE FROM "+
+                TABLE_AVAILABLE+" WHERE "+
+                COLUMN_ITEMID+"= '"+
+                ItemID+"'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL(DELETE_STORAGE);
+        db.close();
+    }
+    public StorageItem[] readStorage(){
+        String query = "SELECT * FROM "+ TABLE_AVAILABLE+" ORDER BY "+ COLUMN_EXPIRATIONDATE+" DESC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        ArrayList<StorageItem> output = new ArrayList<StorageItem>();
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            for (int i =0; i<cursor.getCount(); i++){
+                output.add(new StorageItem(
+                        Integer.parseInt(cursor.getString(1)),
+                        new Date(Long.parseLong(cursor.getString(2))),
+                        Integer.parseInt(cursor.getString(3))
+                ));
+                cursor.moveToNext();
+            }}
+        cursor.close();
+        db.close();
+        return   output.toArray(new StorageItem[0]);
     }
 }
